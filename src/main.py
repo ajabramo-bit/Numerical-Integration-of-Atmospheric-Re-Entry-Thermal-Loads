@@ -46,13 +46,15 @@ while y[0] > 1000.0:
     history['V'].append(y[1])
     history['T'].append(y[2])
 
-y = rk4_step(reentry_odes, t, y, dt, params)
-t += dt
+    y = rk4_step(reentry_odes, t, y, dt, params)
+    t += dt
 
 # Convert lists to arrays
 h = np.array(history['h'])
 V = np.array(history['V'])
 T = np.array(history['T'])
+
+print("Plotting now...")
 
 # Velocity vs. Altitude [km]
 plt.figure()
