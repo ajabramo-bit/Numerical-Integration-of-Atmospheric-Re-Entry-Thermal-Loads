@@ -9,6 +9,7 @@ How do I run the simulation and visualize the results?
 
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.interpolate import griddata
 
 from model import reentry_odes
 from integrator import rk4_step
@@ -59,11 +60,11 @@ print("Plotting now...")
 # Velocity vs. Altitude [km]
 plt.figure()
 plt.plot(V, h / 1000) 
-plt.gca().invert_yaxis() # higher axis = visually higher
+plt.gca().invert_yaxis()
+plt.gca().invert_xaxis()
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [km]')
 plt.title('Velocity vs. Altitude')
-plt.grid(True)
 plt.show()
 
 # Thermal Load vs. Altitude [km]
@@ -73,5 +74,22 @@ plt.gca().invert_yaxis()
 plt.xlabel('Accumulated Thermal Load')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Altitude')
-plt.grid(True)
+plt.show()
+
+# Create grid
+V_grid = np.linspace(min(V), max(V), 200)
+h_grid = np.linspace(min(h), max(h), 200)
+V_mesh, h_mesh = np.meshgrid(V_grid, h_grid)
+
+# Interpolate T onto the grid
+T_grid = griddata((V, h), T, (V_mesh, h_mesh), method='linear')
+
+plt.figure()
+plt.pcolormesh(V_mesh, h_mesh/1000, T_grid, shading='auto', cmap='inferno')
+plt.gca().invert_xaxis()
+plt.gca().invert_yaxis()
+plt.xlabel('Velocity [m/s]')
+plt.ylabel('Altitude [km]')
+plt.title('Thermal Load vs. Velocity and Altitude')
+plt.colorbar(label='Accumulated Thermal Load')
 plt.show()
