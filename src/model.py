@@ -13,15 +13,15 @@ def atmospheric_density(h, rho0=1.225, H=8500.0):
     # Exponential atmosphere model
 
     rho_h = rho0 * np.exp(-h/H)
-        # h: altitude (float) [m]
-        # rho0: sea-level density (float) [kg/m^3]
-        # H: scale height (float) [m]
+        # h: altitude [m]
+        # rho0: sea-level density [kg/m^3]
+        # H: scale height [m]
 
     return rho_h
 
 
 def sutton_graves_heating(rho, V, k=1.83e-4):
-    # Sutton–Graves stagnation-point heating correlation
+    # Sutton-Graves stagnation-point heating correlation
 
     q_dot = k * np.sqrt(rho) * abs(V)**3
         # k: Sutton-Graves coefficient 

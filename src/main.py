@@ -31,7 +31,7 @@ T0 = 0.0     # thermal load - initially, no heat has been absorbed
 y = np.array([h0, V0, T0])
 
 # Time integration setup
-dt = 0.25   # time step [s]
+dt = 5   # time step [s]
 t = 0.0
 
 # stores histories to plot later
