@@ -64,13 +64,28 @@ print("Plotting now...")
 
 # Velocity vs. Altitude [km]
 plt.figure()
-plt.plot(V, h / 1000) 
+
+h_entry = 100.0  # when s/c enters atmosphere
+
+plt.axhline(h_entry, linestyle='--', color='blue', alpha=0.7)
+plt.text(
+    0.6 * max(V),      # x-position (velocity)
+    h_entry + 0.0,     # slight vertical offset so it doesn't overlap the line
+    'Atmospheric Entry (100 km)',
+    color='blue',
+    fontsize=10,
+    verticalalignment='bottom'
+)
+
+plt.plot(V, h / 1000, color='grey',label='Velocity') 
 plt.gca().invert_yaxis()
 plt.gca().invert_xaxis()
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [km]')
 plt.title('Velocity vs. Altitude')
+plt.legend(loc="upper right")
 plt.show()
+
 
 # Deceleration due to Drag
 plt.figure()
@@ -82,12 +97,11 @@ V_ground = V[-1]
 
 # Ground impact marker
 plt.scatter(t_ground, V_ground, color='red', zorder=5)
-plt.axvline(t_ground, linestyle='--', alpha=0.6)
 
 plt.annotate(
     'Ground Impact',
     xy=(t_ground, V_ground),
-    xytext=(t_ground*0.65, 0.2*max(V)),
+    xytext=(t_ground*0.75, max(V)*0.1),
     arrowprops=dict(arrowstyle='->')
 )
 # Compute atmospheric density and drag acceleration
@@ -101,12 +115,12 @@ t_drag = time[idx_drag_dom]
 V_drag = V[idx_drag_dom]
 
 # Drag-dominant annotation
-plt.scatter(t_drag, V_drag, color='purple', zorder=5)
+plt.scatter(t_drag, V_drag, color='red', zorder=5)
 
 plt.annotate(
     'Drag Deceleration Begins',
     xy=(t_drag, V_drag),
-    xytext=(t_drag*1.5, V_drag*0.8),
+    xytext=(t_drag*2.3, V_drag*0.9),
     arrowprops=dict(arrowstyle='->')
 )
 
@@ -121,7 +135,7 @@ plt.show()
 plt.figure()
 plt.plot(T, h / 1000)
 plt.gca().invert_yaxis()
-plt.xlabel('Accumulated Thermal Load [J/m^2]')
+plt.xlabel(r'Accumulated Thermal Load [J/m$^2$]')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Altitude')
 plt.show()
@@ -142,5 +156,5 @@ plt.gca().invert_yaxis()
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Velocity and Altitude')
-plt.colorbar(label='Accumulated Thermal Load [J/m^2]')
+plt.colorbar(label=r'Accumulated Thermal Load [J/m$^2$]')
 plt.show()
