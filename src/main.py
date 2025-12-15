@@ -31,7 +31,7 @@ T0 = 0.0     # thermal load - initially, no heat has been absorbed
 y = np.array([h0, V0, T0])
 
 # Time integration setup
-dt = 5   # time step [s]
+dt = 0.25   # time step [s]
 t = 0.0
 
 # stores histories to plot later
@@ -84,6 +84,7 @@ plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [km]')
 plt.title('Velocity vs. Altitude')
 plt.legend(loc="upper right")
+plt.savefig("plots/Velocity_vs_Altitude_5.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 
@@ -129,6 +130,7 @@ plt.xlabel('Time [s]')
 plt.ylabel('Velocity [m/s]')
 plt.title('Velocity vs Time During Re-entry')
 plt.legend(loc='upper right')
+plt.savefig("plots/Velocity_vs_Time_5.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 
@@ -152,6 +154,7 @@ plt.gca().invert_yaxis()
 plt.xlabel(r'Accumulated Thermal Load [J/m$^2$]')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Altitude')
+plt.savefig("plots/ThermalLoad_vs_Altitude_5.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 # Thermal Load vs. Velocity and Altitude (shows trajection of rocket)
@@ -171,4 +174,5 @@ plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Velocity and Altitude')
 plt.colorbar(label=r'Accumulated Thermal Load [J/m$^2$]')
+plt.savefig("plots/ThermalLoad_vs_Velocity_Altitude_5.png", dpi=300, bbox_inches="tight")
 plt.show()
