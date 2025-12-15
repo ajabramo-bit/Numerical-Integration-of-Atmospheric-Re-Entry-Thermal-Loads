@@ -31,7 +31,7 @@ T0 = 0.0     # thermal load - initially, no heat has been absorbed
 y = np.array([h0, V0, T0])
 
 # Time integration setup
-dt = 0.5   # time step [s]
+dt = 0.25   # time step [s]
 t = 0.0
 
 # stores histories to plot later
@@ -70,7 +70,7 @@ h_entry = 100.0  # when s/c enters atmosphere
 plt.axhline(h_entry, linestyle='--', color='blue', alpha=0.7)
 plt.text(
     0.6 * max(V),      # x-position (velocity)
-    h_entry + 0.0,     # slight vertical offset so it doesn't overlap the line
+    h_entry,     
     'Atmospheric Entry (100 km)',
     color='blue',
     fontsize=10,
@@ -131,9 +131,23 @@ plt.title('Velocity vs Time During Re-entry')
 plt.legend(loc='upper right')
 plt.show()
 
+
 # Thermal Load vs. Altitude [km]
 plt.figure()
-plt.plot(T, h / 1000)
+
+h_entry = 100.0  # when s/c enters atmosphere
+
+plt.axhline(h_entry, linestyle='--', color='blue', alpha=0.7)
+plt.text(
+    1200 * max(V),      # x-position (velocity)
+    h_entry,     
+    'Atmospheric Entry (100 km)',
+    color='blue',
+    fontsize=10,
+    verticalalignment='bottom'
+)
+
+plt.plot(T, h / 1000, color='grey')
 plt.gca().invert_yaxis()
 plt.xlabel(r'Accumulated Thermal Load [J/m$^2$]')
 plt.ylabel('Altitude [km]')
