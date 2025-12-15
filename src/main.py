@@ -57,6 +57,11 @@ T = np.array(history['T'])
 
 print("Plotting now...")
 
+
+# ----------------
+#      PLOTS  
+# ----------------        
+
 # Velocity vs. Altitude [km]
 plt.figure()
 plt.plot(V, h / 1000) 
@@ -67,15 +72,61 @@ plt.ylabel('Altitude [km]')
 plt.title('Velocity vs. Altitude')
 plt.show()
 
+# Deceleration due to Drag
+plt.figure()
+time = np.arange(len(V)) * dt
+
+# Ground impact point (last time step)
+t_ground = time[-1]
+V_ground = V[-1]
+
+# Ground impact marker
+plt.scatter(t_ground, V_ground, color='red', zorder=5)
+plt.axvline(t_ground, linestyle='--', alpha=0.6)
+
+plt.annotate(
+    'Ground Impact',
+    xy=(t_ground, V_ground),
+    xytext=(t_ground*0.65, 0.2*max(V)),
+    arrowprops=dict(arrowstyle='->')
+)
+# Compute atmospheric density and drag acceleration
+rho = np.array([np.exp(-hi / 8500.0) * 1.225 for hi in h])
+a_drag = 0.5 * params['Cd'] * params['A'] / params['m'] * rho * V**2
+
+# Find index where drag first exceeds gravity
+idx_drag_dom = np.where(a_drag > params['g'])[0][0]
+
+t_drag = time[idx_drag_dom]
+V_drag = V[idx_drag_dom]
+
+# Drag-dominant annotation
+plt.scatter(t_drag, V_drag, color='purple', zorder=5)
+
+plt.annotate(
+    'Drag Deceleration Begins',
+    xy=(t_drag, V_drag),
+    xytext=(t_drag*1.5, V_drag*0.8),
+    arrowprops=dict(arrowstyle='->')
+)
+
+plt.plot(time, V,color='gray', label='Velocity')
+plt.xlabel('Time [s]')
+plt.ylabel('Velocity [m/s]')
+plt.title('Velocity vs Time During Re-entry')
+plt.legend(loc='upper right')
+plt.show()
+
 # Thermal Load vs. Altitude [km]
 plt.figure()
 plt.plot(T, h / 1000)
 plt.gca().invert_yaxis()
-plt.xlabel('Accumulated Thermal Load')
+plt.xlabel('Accumulated Thermal Load [J/m^2]')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Altitude')
 plt.show()
 
+# Thermal Load vs. Velocity and Altitude (shows trajection of rocket)
 # Create grid
 V_grid = np.linspace(min(V), max(V), 200)
 h_grid = np.linspace(min(h), max(h), 200)
@@ -91,16 +142,5 @@ plt.gca().invert_yaxis()
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Velocity and Altitude')
-plt.colorbar(label='Accumulated Thermal Load')
-plt.show()
-
-# Deceleration due to Drag
-time = np.arange(len(V)) * dt
-
-plt.figure()
-plt.plot(time, V)
-plt.xlabel('Time [s]')
-plt.ylabel('Velocity [m/s]')
-plt.title('Velocity vs Time During Re-entry')
-plt.grid(True)
+plt.colorbar(label='Accumulated Thermal Load [J/m^2]')
 plt.show()
