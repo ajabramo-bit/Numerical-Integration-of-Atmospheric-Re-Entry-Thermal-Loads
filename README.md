@@ -18,7 +18,7 @@ ASTE404 Mini Project: A Python-based numerical simulation of atmospheric re-entr
 2. Navigate to the project root directory:
     
     ```bash
-    cd MiniProject
+    cd 'ThisFileLocation'
     ```
 
 3. Run the simulation from the root folder:
