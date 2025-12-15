@@ -7,10 +7,33 @@ ASTE404 Mini Project: A Python-based numerical simulation of atmospheric re-entr
 - matplotlib
 - scipy
 
-## Run Instructions 
-1) install proper Python packages
-       pip install numpy matplotlib scipy
-2) locate yourself in the project root directory
-3) run the simulation from root folder
-       python src/main.py
-4) to see changes in timestep - change the vaue of dt in main.py and run again
+## Run Instructions
+
+1. Install required Python packages:
+    
+    ```bash
+    pip install numpy matplotlib scipy
+    ```
+
+2. Navigate to the project root directory:
+    
+    ```bash
+    cd MiniProject
+    ```
+
+3. Run the simulation from the root folder:
+    
+    ```bash
+    python src/main.py
+    ```
+
+4. To change the timestep:
+    
+    - Open `src/main.py`
+    - Modify the value of `dt`
+    - Run again:
+      
+      ```bash
+      python src/main.py
+      ```
+
