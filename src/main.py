@@ -93,3 +93,14 @@ plt.ylabel('Altitude [km]')
 plt.title('Thermal Load vs. Velocity and Altitude')
 plt.colorbar(label='Accumulated Thermal Load')
 plt.show()
+
+# Deceleration due to Drag
+time = np.arange(len(V)) * dt
+
+plt.figure()
+plt.plot(time, V)
+plt.xlabel('Time [s]')
+plt.ylabel('Velocity [m/s]')
+plt.title('Velocity vs Time During Re-entry')
+plt.grid(True)
+plt.show()
